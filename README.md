@@ -2,7 +2,7 @@
 
 A GitHub action to update the status of [Deployments](https://developer.github.com/v3/repos/deployments/) as part of your GitHub CI workflows.
 
-Works great with my other action to create Deployments, [chrnorm/deployment-action](https://github.com/chrnorm/deployment-action).
+Works great with [chrnorm's action to create Deployments, `chrnorm/deployment-action`](https://github.com/chrnorm/deployment-action).
 
 ## Action inputs
 
@@ -21,7 +21,7 @@ Works great with my other action to create Deployments, [chrnorm/deployment-acti
 
 ## Usage example
 
-The below example includes `chrnorm/deployment-action` and `chrnorm/deployment-status` to create and update a deployment within a workflow.
+The below example uses this action to update a deployment within a workflow.
 
 ```yaml
 name: Deploy
@@ -30,7 +30,7 @@ on: [push]
 
 jobs:
   deploy:
-    name: Deploy my app
+    name: Update my deployment status
 
     # IMPORTANT: the workflow must have write access to deployments, otherwise the action will fail.
     permissions:
@@ -41,35 +41,32 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: chrnorm/deployment-action@v2
-        name: Create GitHub deployment
-        id: deployment
+      - name: Update deployment status (pending)
+        if: success()
+        uses: Mortgage-Research-Center/deployment-status@v2
         with:
           token: '${{ github.token }}'
           environment-url: http://my-app-url.com
-          environment: production
-
-      - name: Deploy my app
-        run: |
-          # add your deployment code here
+          state: 'pending'
+          deployment-id: ${{ github.event.deployment.id }}
 
       - name: Update deployment status (success)
         if: success()
-        uses: chrnorm/deployment-status@v2
+        uses: Mortgage-Research-Center/deployment-status@v2
         with:
           token: '${{ github.token }}'
           environment-url: http://my-app-url.com
           state: 'success'
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment-id: ${{ github.event.deployment.id }}
 
       - name: Update deployment status (failure)
         if: failure()
-        uses: chrnorm/deployment-status@v2
+        uses: Mortgage-Research-Center/deployment-status@v2
         with:
           token: '${{ github.token }}'
           environment-url: http://my-app-url.com
           state: 'failure'
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment-id: ${{ github.event.deployment.id }}
 ```
 
 ## Development
