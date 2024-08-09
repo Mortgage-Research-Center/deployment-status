@@ -1,0 +1,18 @@
+name: 'REQUIRED: Close stale PRs'
+on:
+  schedule:
+  - cron: '0 2 * * *'
+
+permissions:
+    pull-requests: write
+    contents: read
+    issues: write
+
+jobs:
+    close-prs:
+        name: Close stale PRs
+        uses: Mortgage-Research-Center/action-workflows/.github/workflows/close-stale-pr.yml@main
+        with:
+          debug-only: false
+        secrets:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
