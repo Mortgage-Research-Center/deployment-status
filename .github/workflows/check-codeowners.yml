@@ -1,0 +1,14 @@
+name: 'REQUIRED: Check CODEOWNERS on Commit'
+on:
+push:
+  branches:
+    - "*"
+    - "!main"
+    - "!canary-*"
+
+jobs:
+  check-codeowners:
+    name: Check Codeowners
+    uses: Mortgage-Research-Center/action-workflows/.github/workflows/check-codeowners.yml@main
+    secrets:
+      repo-token: ${{ secrets.GITHUB_TOKEN }}
