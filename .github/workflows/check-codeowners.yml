@@ -1,10 +1,10 @@
 name: 'REQUIRED: Check CODEOWNERS on Commit'
 on:
-push:
-  branches:
-    - "*"
-    - "!main"
-    - "!canary-*"
+  push:
+    branches:
+      - "*"
+      - "!main"
+      - "!canary-*"
 
 jobs:
   check-codeowners:
