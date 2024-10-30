@@ -9,6 +9,4 @@ on:
 jobs:
   check-codeowners:
     name: Check Codeowners
-    uses: Mortgage-Research-Center/action-workflows/.github/workflows/check-codeowners.yml@main
-    secrets:
-      repo-token: ${{ secrets.GITHUB_TOKEN }}
+    uses: Mortgage-Research-Center/action-workflows/.github/workflows/client.check-codeowners.yml@v1
