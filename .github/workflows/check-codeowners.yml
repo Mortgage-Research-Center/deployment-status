@@ -9,4 +9,4 @@ on:
 jobs:
   check-codeowners:
     name: Check Codeowners
-    uses: Mortgage-Research-Center/action-workflows/.github/workflows/client.check-codeowners.yml@v1
+    uses: vu-platform/action-workflows/.github/workflows/client.check-codeowners.yml@v1
